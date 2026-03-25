@@ -33,7 +33,7 @@ def predict():
 
     try:
         data = request.get_json(force=True)
-        input_df = pd.DataFrame([data])
+       # input_df = pd.DataFrame([data])
         
         
         for col in ['is_weekend', 'has_media', 'contains_url']:
