@@ -25,7 +25,7 @@ def home():
     """Renders the main HTML page."""
     return render_template('index.html')
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET'])
 def predict():
     """Receives input data, makes a prediction, and returns the result."""
     if model is None:
@@ -43,13 +43,13 @@ def predict():
         prediction_result = model.predict(input_df)
         prediction_proba = model.predict_proba(input_df)
 
-        is_fake = bool(prediction_result[0])
+        is_fake = bool(prediction_result[1])
         output_class = 'Fake' if is_fake else 'Real'
         confidence_score = np.max(prediction_proba) * 100
 
         return jsonify({
             'prediction': output_class,
-            'confidence': f'{confidence_score:.2f}'
+            'confidence': f'{confidence_score:.3f}'
         })
 
     except Exception as e:
